@@ -1,3 +1,43 @@
+import streamlit as st
+import requests
+import json
+import numpy as np
+import pandas as pd
+from datetime import datetime, timedelta
+import matplotlib.pyplot as plt
+
+# Configuration
+API_KEY = "bc87829e1d2d4ee68dcbb775c90b598a"
+VALUE_URL = "https://api.rentcast.io/v1/avm/value"
+RENT_URL = "https://api.rentcast.io/v1/avm/rent/long-term"
+
+headers = {
+    "X-Api-Key": API_KEY
+}
+
+def fetch_property_value(address):
+    params = {"address": address}
+    response = requests.get(VALUE_URL, headers=headers, params=params)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        st.error(f"Value API Error {response.status_code}: {response.text}")
+        return None
+
+def fetch_rent_estimate(address):
+    params = {"address": address}
+    response = requests.get(RENT_URL, headers=headers, params=params)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        st.error(f"Rent API Error {response.status_code}: {response.text}")
+        return None
+
+def generate_trend(current_value, growth_rate=0.03, years=10):
+    dates = [datetime.now() - timedelta(days=365 * i) for i in reversed(range(years))]
+    values = [current_value / ((1 + growth_rate) ** (years - i - 1)) for i in range(years)]
+    return pd.DataFrame({'Year': [d.year for d in dates], 'Value': values})
+
 def main():
     st.title("🏡 Property Valuation & Rent Insights Dashboard")
 
@@ -58,19 +98,12 @@ def main():
     else:
         st.warning("⚠️ Please enter a valid address to get started.")
 
-
-# add this to your app
-
-import streamlit as st
-
 def health_check():
     st.write("ok")
 
-if st.experimental_get_query_params().get("healthz"):
-    health_check()
-else:
-    # your normal app code here
-    main()
 if __name__ == "__main__":
-    main()
-
+    query_params = st.experimental_get_query_params()
+    if "healthz" in query_params:
+        health_check()
+    else:
+        main()
