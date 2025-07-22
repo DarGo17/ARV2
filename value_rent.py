@@ -18,18 +18,18 @@ headers = {
     "X-Api-Key": API_KEY
 }
 
-# Load or initialize pull counter
-def load_counter():
-    if os.path.exists(COUNTER_FILE):
-        with open(COUNTER_FILE, "r") as f:
-            data = json.load(f)
-            return data.get("remaining", MAX_PULLS)
-    else:
-        return MAX_PULLS
+# # Load or initialize pull counter
+# def load_counter():
+#     if os.path.exists(COUNTER_FILE):
+#         with open(COUNTER_FILE, "r") as f:
+#             data = json.load(f)
+#             return data.get("remaining", MAX_PULLS)
+#     else:
+#         return MAX_PULLS
 
-def save_counter(remaining):
-    with open(COUNTER_FILE, "w") as f:
-        json.dump({"remaining": remaining}, f)
+# def save_counter(remaining):
+#     with open(COUNTER_FILE, "w") as f:
+#         json.dump({"remaining": remaining}, f)
 
 def fetch_property_value(address):
     params = {"address": address}
