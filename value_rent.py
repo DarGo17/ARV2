@@ -12,7 +12,7 @@ API_KEY = "bc87829e1d2d4ee68dcbb775c90b598a"
 VALUE_URL = "https://api.rentcast.io/v1/avm/value"
 RENT_URL = "https://api.rentcast.io/v1/avm/rent/long-term"
 MAX_PULLS = 50
-COUNTER_FILE = "pull_counter.json"
+# COUNTER_FILE = "pull_counter.json"
 
 headers = {
     "X-Api-Key": API_KEY
@@ -58,7 +58,7 @@ def generate_trend(current_value, growth_rate=0.03, years=10):
 def main():
     st.title("🏡 Property Valuation & Rent Insights Dashboard")
 
-    remaining_pulls = load_counter()
+    # remaining_pulls = load_counter()
     st.sidebar.markdown(f"### API Calls Remaining: **{remaining_pulls}**")
 
     address = st.text_input("Enter Full Property Address", "3821 Hargis St, Austin, TX 78723")
@@ -129,9 +129,9 @@ def main():
             st.json(rent_data)
 
         # Decrement counter and save
-        remaining_pulls -= 1
-        save_counter(remaining_pulls)
-        st.sidebar.markdown(f"### API Calls Remaining: **{remaining_pulls}**")
+        # remaining_pulls -= 1
+        # save_counter(remaining_pulls)
+        # st.sidebar.markdown(f"### API Calls Remaining: **{remaining_pulls}**")
 
 if __name__ == "__main__":
     main()
