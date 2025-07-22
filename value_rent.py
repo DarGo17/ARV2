@@ -59,18 +59,18 @@ def main():
     st.title("🏡 Property Valuation & Rent Insights Dashboard")
 
     # remaining_pulls = load_counter()
-    st.sidebar.markdown(f"### API Calls Remaining: **{remaining_pulls}**")
+    # st.sidebar.markdown(f"### API Calls Remaining: **{remaining_pulls}**")
 
-    address = st.text_input("Enter Full Property Address", "3821 Hargis St, Austin, TX 78723")
+    address = st.text_input("Enter Full Property Address", "Your address here")
 
-    if st.button("Analyze Property"):
-        if remaining_pulls <= 0:
-            st.error("❌ Monthly API pull limit reached (50). Wait until next month.")
-            return
+    # if st.button("Analyze Property"):
+    #     if remaining_pulls <= 0:
+    #         st.error("❌ Monthly API pull limit reached (50). Wait until next month.")
+    #         return
 
-        if not address.strip():
-            st.warning("⚠️ Please enter a valid address.")
-            return
+        # if not address.strip():
+        #     st.warning("⚠️ Please enter a valid address.")
+        #     return
 
         st.info(f"📡 Fetching data for **{address}**...")
 
