@@ -58,10 +58,19 @@ def main():
     else:
         st.warning("⚠️ Please enter a valid address to get started.")
 
+
+# add this to your app
+
+import streamlit as st
+
+def health_check():
+    st.write("ok")
+
+if st.experimental_get_query_params().get("healthz"):
+    health_check()
+else:
+    # your normal app code here
+    main()
 if __name__ == "__main__":
     main()
 
-
-
-if __name__ == "__main__":
-    main()
