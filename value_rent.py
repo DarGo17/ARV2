@@ -102,8 +102,15 @@ def health_check():
     st.write("ok")
 
 if __name__ == "__main__":
-    selected_value = st.query_params.get("key", "default")
-    if "healthz" in query_params:
+    try:
+        # For Streamlit 1.30+ (multipage apps)
+        query_params = st.query_params
+    except AttributeError:
+        # Fallback for older versions or single-page apps
+        query_params = st.experimental_get_query_params()
+
+    # Some query param sources return list values (like ?healthz=1), handle both cases
+    if "healthz" in query_params or query_params.get("healthz") == [""]:
         health_check()
     else:
         main()
