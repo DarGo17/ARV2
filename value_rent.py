@@ -102,7 +102,7 @@ def health_check():
     st.write("ok")
 
 if __name__ == "__main__":
-    query_params = st.experimental_get_query_params()
+    selected_value = st.query_params.get("key", "default")
     if "healthz" in query_params:
         health_check()
     else:
